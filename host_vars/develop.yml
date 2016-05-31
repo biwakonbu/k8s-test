@@ -1,0 +1,14 @@
+[k8s-master]
+k8s-master ansible_ssh_host=127.0.0.1 ansible_ssh_port=2200
+
+[redis-server]
+redis-master ansible_ssh_host=127.0.0.1 ansible_ssh_port=2205
+redis-slave ansible_ssh_host=127.0.0.1 ansible_ssh_port=2206
+
+[db-server]
+db-master ansible_ssh_host=127.0.0.1 ansible_ssh_port=2202
+db-slave ansible_ssh_host=127.0.0.1 ansible_ssh_port=2203
+
+[web-server]
+k8s-cluster1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2211
+k8s-cluster2 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2212

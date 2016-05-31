@@ -1,0 +1,10 @@
+# emacs
+\#*
+*~
+*.*~
+
+# vagrant files
+.vagrant/**
+
+# vagrant ssh_config
+ssh_config

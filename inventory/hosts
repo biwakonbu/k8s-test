@@ -1,0 +1,5 @@
+[develop]
+k8s-master
+web-server
+redis-server
+db-server
