@@ -1,0 +1,12 @@
+- hosts: k8s
+  gather_facts: true
+  remote_user: vagrant
+  become: yes
+  tasks:
+    - name: Kubernetes install
+      yum: name=kubernetes state=latest
+
+    - name: setting openssl key
+      shell: |
+        openssl genrsa -out /etc/kubernetes/serviceaccount.key 2048
+      changed_when: false

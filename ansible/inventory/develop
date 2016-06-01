@@ -1,0 +1,17 @@
+[k8s]
+k8s ansible_host=k8s
+
+[db]
+db ansible_host=db
+
+[redis]
+redis ansible_host=redis
+
+[web]
+cluster ansible_host=cluster
+
+[develop:children]
+k8s
+web
+redis
+db

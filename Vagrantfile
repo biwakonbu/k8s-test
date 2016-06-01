@@ -6,40 +6,27 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "centos/7"
 
-  config.vm.define 'k8s-master' do |k8s|
+  config.vm.define 'k8s' do |k8s|
     k8s.vm.network 'private_network', ip: '192.168.55.100'
-    k8s.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2300
+    k8s.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 23000
   end
 
-  config.vm.define 'db-master' do |db|
-    db.vm.network "private_network", ip: "192.168.55.102"
-    db.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2302
+  config.vm.define 'db' do |db|
+    db.vm.network "private_network", ip: "192.168.55.101"
+    db.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 23001
   end
 
-  config.vm.define 'db-slave' do |db|
-    db.vm.network "private_network", ip: "192.168.55.103"
-    db.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2303
+  config.vm.define 'redis' do |redis|
+    redis.vm.network "private_network", ip: "192.168.55.102"
+    redis.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 23002
   end
 
-  config.vm.define 'redis-master' do |redis|
-    redis.vm.network "private_network", ip: "192.168.55.105"
-    redis.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2305
+  config.vm.define 'cluster' do |k8s|
+    k8s.vm.network "private_network", ip: "192.168.55.103"
+    k8s.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 23003
   end
 
-  config.vm.define 'redis-slave' do |redis|
-    redis.vm.network "private_network", ip: "192.168.55.106"
-    redis.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2306
-  end
-
-  config.vm.define 'k8s-cluster1' do |k8s|
-    k8s.vm.network "private_network", ip: "192.168.55.111"
-    k8s.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2311
-  end
-
-  config.vm.define 'k8s-cluster2' do |k8s|
-    k8s.vm.network "private_network", ip: "192.168.55.112"
-    k8s.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2312
-  end
+  config.vm.synced_folder '.', '/vagrant/src', create: true
 
   # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.provider "virtualbox" do |vb|
