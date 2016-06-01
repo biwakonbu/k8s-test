@@ -6,7 +6,35 @@
     - name: Kubernetes install
       yum: name=kubernetes state=latest
 
-    - name: setting openssl key
+    - name: etcd install
+      yum: name=etcd state=latest
+
+    - name: systemctl disable and stop firewalld
       shell: |
-        openssl genrsa -out /etc/kubernetes/serviceaccount.key 2048
+        systemctl disable firewalld
+        systemctl stop firewalld
+      changed_when: false
+
+    - name: systemctl start and enable etcd
+      shell: |
+        systemctl start etcd
+        systemctl enable etcd
+      changed_when: false
+
+    - name: systemctl start and enable kube-apiserver
+      shell: |
+        systemctl start kube-apisever
+        systemctl enable kube-apiserver
+      changed_when: false
+
+    - name: systemctl start and enable kube-controller-manager
+      shell: |
+        systemctl start kube-controller-manager
+        systemctl enable kube-controller-manager
+      changed_when: false
+
+    - name: systemctl start and enable kube-scheduler
+      shell: |
+        systemctl start kube-scheduler
+        systemctl enable kube-scheduler
       changed_when: false
